@@ -1,0 +1,99 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Kartu List</title>
+    {% tailwind_css %}
+</head>
+<body>
+<div>
+    <div class="navbar bg-neutral text-neutral-content h-36 lg:h-14">
+        <div class="flex-1 p-4 lg:p-0 justify-center">
+          <a href="{% url 'main_page' %}" class="font-mono btn btn-ghost normal-case text-5xl lg:text-2xl">✧･ﾟ: KartuKartu *:･ﾟ✧</a>
+        </div>
+        <!-- <div class="flex-none p-4 lg:p-0">
+          <button class="btn btn-square btn-ghost">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-12 lg:w-5 h-12 lg:h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
+          </button>
+        </div> -->
+      </div>
+</div>
+<div class="mx-12 lg:mx-10 my-10 lg:my-2">
+    <p class="p-2 text-center text-3xl lg:text-xl">KartuKartu adalah sebuah <span style="font-style:italic">platform</span> permainan kartu berisi pertanyaan-pertanyaan seru dan asyik untuk dijadikan topik pembicaraan ataupun <span style="font-style:italic">ice breaking</span> dalam situasi apapun bersama teman, pacar, hingga keluarga. <span style="font-weight:bold">Selamat bermain!</span> (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧</p>
+</div>    
+<div class="mx-12 lg:mx-10 my-8 lg:my-5">
+    <div class="form-control">
+        <form action="/search">
+          <div class="input-group">
+            <input name="q" type="text" placeholder=" Search…" class="w-full h-28 lg:h-14 input input-bordered sm:text-4xl lg:text-xl"/>
+            <button class="btn btn-square h-28 lg:h-14 w-28 lg:w-14" type="submit">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 lg:h-8 lg:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+            </button>
+          </div>
+        </form>
+        <!-- <div class="input-group">
+          <input name="judul" id="search_here" type="text" placeholder=" Search…" class="w-full h-28 lg:h-14 input input-bordered sm:text-4xl lg:text-xl" />
+          <button class="btn btn-square h-28 lg:h-14 w-28 lg:w-14">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 lg:h-8 lg:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+          </button>
+        </div> -->
+    </div>
+</div>    
+<div class="justify-center items-center grid lg:grid-cols-3 flex flex-col md:flex-row">
+    {% for card in cards %}
+    <ul>
+      <a href="{% url 'detail' card.id %}">
+        <div class="card w-100% bg-base-100 shadow-xl mx-12 lg:mx-10 my-10">
+            <figure><img src='{{card.image.url}}' alt="Shoes" /></figure>
+            <div class="card-body">
+              <h1 class="card-title text-4xl lg:text-xl">
+                {{card.title}}
+                {% if card.is_baru %}
+                <div class="badge badge-secondary badge-lg text-2xl lg:text-base h-10 lg:h-6">Baru</div>
+                {% endif %}
+              </h1>
+              <p class="text-3xl lg:text-base">{{card.desc}}</p>
+              <div class="card-actions justify-end my-5 lg:my-1.5">
+                {% for t in card.tags.all %}
+                  {% if t.title == 'percintaan' %}
+                    <div class="badge badge-accent badge-lg text-2xl lg:text-base h-10 lg:h-6" id="tags">{{t.title}}</div> 
+                  {% elif t.title == 'persahabatan' %}
+                    <div class="badge badge-primary badge-lg text-2xl lg:text-base h-10 lg:h-6" id="tags">{{t.title}}</div> 
+                  {% else %}
+                    <div class="badge badge-ghost badge-lg text-2xl lg:text-base h-10 lg:h-6" id="tags">{{t.title}}</div> 
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+    </a>
+    </ul>
+    {% endfor %}
+</div>
+<div>
+    <footer class="footer footer-center p-4 bg-base-300 text-3xl lg:text-sm" style="position:fixed; bottom:0;left:0;">
+        <div>
+          <p class="font-mono">Made with &hearts; by Jasmine</p>
+        </div>
+      </footer>
+</div>
+</body>
+</html>
+
+<script>
+  badgeColor = () => {
+    let tag = document.getElementById('tags')
+    console.log(tag)
+    let x = tag.innerText;
+
+    if (x == "percintaan") {
+      tag.className = "badge badge-accent";
+    } else if (x == "persahabatan") {
+      tag.className = "badge badge-primary";
+    } else {
+      tag.className = "badge badge-ghost";
+    }
+  }
+  document.getElementById('tags').onload = badgeColor();
+</script>

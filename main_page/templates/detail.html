@@ -1,0 +1,114 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <meta charset="UTF-8" />
+    <title>Kartu List</title>
+    {% tailwind_css %}
+</head>
+<body>
+    <div>
+        <div class="navbar bg-neutral text-neutral-content h-36 lg:h-14">
+            <div class="flex-1 p-4 lg:p-0 justify-center">
+                <a href="{% url 'main_page' %}" class="font-mono btn btn-ghost normal-case text-5xl lg:text-2xl">✧･ﾟ: KartuKartu *:･ﾟ✧</a>
+            </div>
+        </div>
+    </div>
+    <div class="card w-90% h-screen bg-base-100 shadow-xl m-10 parent">
+        <div class="card-body" style="vertical-align: middle; display: flex;">
+            <div class="m-10">
+                <h2 class="card-title text-6xl justify-center my-15">{{card.title}}</h2>
+            </div>
+            <div class="m-10 child" style="vertical-align: middle; display: flex;">
+                <h1 class="text-center text-6xl lg:text-5xl" id='map_holder' style="vertical-align: middle;"></h1>
+            </div>
+            <div class="card-actions child-2">
+                <a id="prev"class="previous button-1">Previous</a>
+                <a id="next" class="next button-1">Next</a>
+            </div>
+        </div>
+    </div>  
+
+</body>
+<div>
+    <footer class="footer footer-center p-4 bg-base-300 text-3xl lg:text-sm" style="position:fixed; bottom:0;left:0;">
+        <div>
+          <p class="font-mono">Made with &hearts; by Jasmine</p>
+        </div>
+      </footer>
+</div>
+</html>
+<script>
+    var arr = {{decks|safe}};
+    console.log(arr)
+    var i = 0;
+    display(0); //show the first photo initially
+
+    $('#prev').click(function(){
+        i--;
+        display(i);
+    });
+
+    $('#next').click(function(){
+        i++;
+        display(i);
+    });
+
+    function display(i) {        
+        $('#map_holder').empty();
+        $('#map_holder').append(arr[i]);
+
+        if(i == 0) 
+            $('#prev').hide();
+        else  
+            $('#prev').show();     
+
+        if(i == arr.length-1)
+            $('#next').hide();
+        else
+            $('#next').show();   
+    }
+</script>
+<style>
+    .button-1 {
+        border: none;
+        padding: 25px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 32px;
+        height: 100px;
+        width: 200px;
+        border-radius: 10px;
+    }
+    
+    
+    .previous {
+        background-color: #f1f1f1;
+        color: black;
+    }
+    
+    .next {
+        color: whitesmoke;
+        background-color: #14b8a6;
+    }
+
+    .parent {
+        position: relative;
+    }
+
+    .child {
+        position: absolute;
+        top: 35%;
+    }
+
+    .child-2 {
+        align-items: center; 
+        justify-content: center;
+        position: absolute;
+        top: 80%;
+        left: 27%
+    }
+
+</style>
