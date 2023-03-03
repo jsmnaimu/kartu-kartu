@@ -1,1 +1,1 @@
-web: gunicorn project_kartu.wsgi --log-file
+web: gunicorn 'project_kartu.wsgi'
