@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.3/dist/full.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.tailwindcss.com"></script>
     <meta charset="UTF-8" />
     <title>Kartu List</title>
     {% tailwind_css %}
@@ -80,20 +82,3 @@
 </div>
 </body>
 </html>
-
-<script>
-  badgeColor = () => {
-    let tag = document.getElementById('tags')
-    console.log(tag)
-    let x = tag.innerText;
-
-    if (x == "percintaan") {
-      tag.className = "badge badge-accent";
-    } else if (x == "persahabatan") {
-      tag.className = "badge badge-primary";
-    } else {
-      tag.className = "badge badge-ghost";
-    }
-  }
-  document.getElementById('tags').onload = badgeColor();
-</script>
